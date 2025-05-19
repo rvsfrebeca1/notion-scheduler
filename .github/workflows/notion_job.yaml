@@ -1,0 +1,22 @@
+ name: Notion Daily Page Creator
+ on:
+   schedule:
+     - cron: "0 0 * * *"
+ jobs:
+   build:
+     runs-on: ubuntu-latest
+     steps:
+     - name: Baixar Código do Repositório
+       uses: actions/checkout@v3
+     - name: Configurar Python
+       uses: actions/setup-python@v4
+       with:
+         python-version: '3.x'
+     - name: Instalar Dependências
+       run: |
+         pip install notion-client
+     - name: Executar Script
+       run: python3 notion_daily_page.py
+       env:
+         NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+         DATABASE_ID: ${{ secrets.DATABASE_ID }}
