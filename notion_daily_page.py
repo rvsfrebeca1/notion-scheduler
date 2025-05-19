@@ -13,13 +13,13 @@ def criar_pagina_diaria():
 
     if dia_da_semana in [5, 6]: 
         propriedades = {
-            "@Today": {"type": "title"},
+            "@Today": {"type": "title", "title": {}},
             "🍲 Fazer marmitas da semana": {"checkbox": False},
             "Data":{"type": "date", "date": {}},
         }
     else: 
         propriedades = {
-            "@Today": {"type": "title"},
+             "@Today": {"type": "title", "title": {}},
             "☕ Café da manhã - 8h": {"checkbox": False},
             "🍽️ Almoço - 13h": {"checkbox": False},
             "🏃🏽‍♀️Fazer exercicios - 30min": {"checkbox": False},
