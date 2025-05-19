@@ -22,7 +22,7 @@ def criar_pagina_diaria():
         propriedades = {
             "☕ Café da manhã - 8h": {"checkbox": False},
             "🍽️ Almoço - 13h": {"checkbox": False},
-            "🏃🏽‍♀️Fazer exercícios - 30min": {"checkbox": False},
+            "🏃🏽‍♀️Fazer exercicios - 30min": {"checkbox": False},
             "👩🏾‍🎓Estudo - 20h": {"checkbox": False},
             "Data": {"date": {"start": data_formatada}}, 
         }
@@ -33,7 +33,7 @@ def criar_pagina_diaria():
             parent={"database_id": database_id},
             properties={
                 **propriedades,
-                "Name": {"title": [{"text": {"content": titulo_pagina}}]}
+                "Nome": {"title": [{"text": {"content": titulo_pagina}}]}
             }
         )
         print(f"🚀 Página '{titulo_pagina}' criada com sucesso! ID: {nova_pagina['id']}")
