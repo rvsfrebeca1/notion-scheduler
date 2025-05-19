@@ -15,7 +15,7 @@ def criar_pagina_diaria():
         propriedades = {
             "@Today": {"type": "title"},
             "🍲 Fazer marmitas da semana": {"checkbox": False},
-            "Data":{"type": "date"},
+            "Data":{"type": "date", "date": {}},
         }
     else: 
         propriedades = {
@@ -24,7 +24,7 @@ def criar_pagina_diaria():
             "🍽️ Almoço - 13h": {"checkbox": False},
             "🏃🏽‍♀️Fazer exercicios - 30min": {"checkbox": False},
             "👩🏾‍🎓Estudo - 20h": {"checkbox": False},
-            "Data":{"type": "date"},
+            "Data":{"type": "date", "date": {}},
         }
 
     notion.pages.create(
