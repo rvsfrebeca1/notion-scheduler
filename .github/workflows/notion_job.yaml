@@ -2,6 +2,7 @@
  on:
    schedule:
      - cron: "0 0 * * *"
+   workflow_dispatch: # Permite execuções manuais
  jobs:
    build:
      runs-on: ubuntu-latest
