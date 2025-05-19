@@ -1,40 +1,43 @@
+python
 import os
 from notion_client import Client
 import datetime
 
 notion_token = os.getenv("NOTION_TOKEN")
-database_id = os.getenv("DATABASE_ID") 
-
+database_id = os.getenv("DATABASE_ID")
 notion = Client(auth=notion_token)
 
 def criar_pagina_diaria():
-  
     hoje = datetime.date.today()
     data_formatada = hoje.strftime("%Y-%m-%d")  
-    dia_da_semana = hoje.weekday()  
+    dia_da_semana = hoje.weekday()
+    titulo_pagina = "@Today" 
 
-    if dia_da_semana in [5, 6]:  # Finais de semana
+    if dia_da_semana in [5, 6]:  # Finais de semana (sábado e domingo)
         propriedades = {
-            "@Today": {"title": [{"text": {"content": "@Today"}}]}, 
-            "🍲 Fazer marmitas da semana": {"checkbox": False},
+            "🍲 Fazer marmitas da semana": {"checkbox": False}, 
             "Data": {"date": {"start": data_formatada}},
         }
-    else:  # Dias úteis
+        print("✨ Criando página com a propriedade '🍲 Fazer marmitas da semana' para o final de semana.")
+    else:  # Dias úteis (segunda a sexta)
         propriedades = {
-            "@Today": {"title": [{"text": {"content": "@Today"}}]}, 
             "☕ Café da manhã - 8h": {"checkbox": False},
-            "🍽️ Almoço - 13h": {"checkbox": False}, 
+            "🍽️ Almoço - 13h": {"checkbox": False},
             "🏃🏽‍♀️Fazer exercícios - 30min": {"checkbox": False},
             "👩🏾‍🎓Estudo - 20h": {"checkbox": False},
-            "Data": {"date": {"start": data_formatada}},
+            "Data": {"date": {"start": data_formatada}}, 
         }
+        print("✨ Criando página com propriedades para dia útil.")
 
     try:
         nova_pagina = notion.pages.create(
             parent={"database_id": database_id},
-            properties=propriedades,
+            properties={
+                **propriedades,
+                "Name": {"title": [{"text": {"content": titulo_pagina}}]}
+            }
         )
-        print(f"🚀 Página criada com sucesso! ID: {nova_pagina['id']}")
+        print(f"🚀 Página '{titulo_pagina}' criada com sucesso! ID: {nova_pagina['id']}")
     except Exception as e:
         print(f"❌ Erro ao criar a página: {e}")
 
