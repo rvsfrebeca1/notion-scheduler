@@ -14,16 +14,14 @@ def criar_pagina_diaria():
 
     if dia_da_semana in [5, 6]: 
         propriedades = {
-            "Name": {"title": [{"text": {"content": nome_pagina}}]},
-            "Fazer marmitas": {"checkbox": False},
+            "🍲 Fazer marmitas da semana": {"checkbox": False},
         }
     else: 
         propriedades = {
-            "Name": {"title": [{"text": {"content": nome_pagina}}]},
-            "Café da manhã": {"checkbox": False},
-            "Almoço": {"checkbox": False},
-            "Fazer exercícios": {"checkbox": False},
-            "Estudo": {"checkbox": False},
+            "☕ Café da manhã - 8h": {"checkbox": False},
+            "🍽️ Almoço - 13h": {"checkbox": False},
+            "🏃🏽‍♀️Fazer exercicios - 30min": {"checkbox": False},
+            "👩🏾‍🎓Estudo - 20h": {"checkbox": False},
         }
 
     notion.pages.create(
