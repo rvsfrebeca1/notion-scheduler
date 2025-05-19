@@ -9,7 +9,6 @@ notion = Client(auth=notion_token)
 
 def criar_pagina_diaria():
     hoje = datetime.date.today()
-    nome_pagina = 
     dia_da_semana = hoje.weekday()
 
     if dia_da_semana in [5, 6]: 
