@@ -10,7 +10,7 @@ def criar_pagina_diaria():
     hoje = datetime.date.today()
     data_formatada = hoje.strftime("%Y-%m-%d")  
     dia_da_semana = hoje.weekday()
-    titulo_pagina = "@Today" 
+    titulo_pagina = hoje.strftime("%Y-%m-%d") 
 
     if dia_da_semana in [5, 6]:  # Finais de semana (sábado e domingo)
         propriedades = {
