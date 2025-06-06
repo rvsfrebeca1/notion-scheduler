@@ -7,10 +7,11 @@ database_id = os.getenv("DATABASE_ID")
 notion = Client(auth=notion_token)
 
 def criar_pagina_diaria():
-    hoje = datetime.date.today()
-    data_formatada = hoje.strftime("%Y-%m-%d")  
+    hoje = datetime.date.today() 
+    data_formatada = hoje.strftime("%Y-%m-%d")   
+    data_formatada = hoje.strftime("%d-%m-%Y")
     dia_da_semana = hoje.weekday()
-    titulo_pagina = hoje.strftime("%Y-%m-%d") 
+    
 
     if dia_da_semana in [5, 6]:  # Finais de semana (sábado e domingo)
         propriedades = {
@@ -22,7 +23,7 @@ def criar_pagina_diaria():
         propriedades = {
             "☕ Café da manhã - 8h": {"checkbox": False},
             "🍽️ Almoço - 13h": {"checkbox": False},
-            "🏃🏽‍♀️Fazer exercicios - 30min": {"checkbox": False},
+            "🏃🏽‍♀️Fazer exercícios - 30min": {"checkbox": False},
             "👩🏾‍🎓Estudo - 20h": {"checkbox": False},
             "Data": {"date": {"start": data_formatada}}, 
         }
@@ -33,7 +34,7 @@ def criar_pagina_diaria():
             parent={"database_id": database_id},
             properties={
                 **propriedades,
-                "Nome": {"title": [{"text": {"content": titulo_pagina}}]}
+                "Name": {"title": [{"text": {"content": data_formatada}}]}
             }
         )
         print(f"🚀 Página '{titulo_pagina}' criada com sucesso! ID: {nova_pagina['id']}")
