@@ -9,8 +9,7 @@ notion = Client(auth=notion_token)
 def criar_pagina_diaria():
     hoje = datetime.date.today()
     data_formatada = hoje.strftime("%Y-%m-%d")
-    data_formatada_portugues = hoje.strftime("%d-%m-%Y")
-    dia_da_semana = hoje.weekday()
+    data_formatada_portugues = hoje.strftime("%d/%m/%Y")
     
     propriedades = {
         "☕ Café da manhã - 8h": {"checkbox": False},
