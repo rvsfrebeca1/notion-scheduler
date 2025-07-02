@@ -10,15 +10,17 @@ def criar_pagina_diaria():
     hoje = datetime.date.today()
     data_formatada = hoje.strftime("%Y-%m-%d")
     data_formatada_portugues = hoje.strftime("%d/%m/%Y")
-    
+
     propriedades = {
         "☕ Café da manhã - 8h": {"checkbox": False},
         "🍽️ Almoço - 13h": {"checkbox": False},
-        "🏃🏽‍♀️Fazer exercicios - 30min": {"checkbox": False},
-        "👩🏾‍🎓Estudo - 20h": {"checkbox": False},
-        "Data": {"date": {"start": data_formatada}}, 
+        "🏃🏽‍♀️ Fazer exercícios - 30min": {"checkbox": False}, 
+        "👩🏾‍🎓 Estudo Matemática - 20h": {"checkbox": False},
+        "👩🏾‍🎓 Estudo Programação - 20h": {"checkbox": False},
+        "👩🏾‍🎓 Estudo Inglês - 20h": {"checkbox": False},
+        "Data": {"date": {"start": data_formatada}},
     }
-    
+
     try:
         nova_pagina = notion.pages.create(
             parent={"database_id": database_id},
