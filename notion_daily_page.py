@@ -15,9 +15,7 @@ def criar_pagina_diaria():
         "☕ Café da manhã - 8h": {"checkbox": False},
         "🍽️ Almoço - 13h": {"checkbox": False},
         "🏃🏽‍♀️ Fazer exercícios - 30min": {"checkbox": False}, 
-        "👩🏾‍🎓 Estudo Matemática - 20h": {"checkbox": False},
-        "👩🏾‍🎓 Estudo Programação - 20h": {"checkbox": False},
-        "👩🏾‍🎓 Estudo Inglês - 20h": {"checkbox": False},
+        "👩🏾‍🎓Estudo - 20h": {"checkbox": False},
         "Data": {"date": {"start": data_formatada}},
     }
 
