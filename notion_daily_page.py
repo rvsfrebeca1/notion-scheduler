@@ -17,7 +17,7 @@ LEMBRETES_MENSAIS = {
                 "emoji": "💰"
             },
             {
-                "mensagem": "Eai, vamos revisar as metas de 2026 e ver o que ainda faz sentido ou não? Seja sincera consigo mesma!",
+                "mensagem": "E, ai. Vamos revisar as metas de 2026 e ver o que ainda faz sentido ou não? Seja sincera consigo mesma!",
                 "url": "https://www.notion.so/Planos-pessoais-por-prioridade-7ee8cb657df94cbea68deb61767d904c",
                 "emoji": "⚠️"
             }
@@ -26,9 +26,9 @@ LEMBRETES_MENSAIS = {
 
 # 2. Regra Semanal
 AVISO_SEXTA_FEIRA = {
-    "mensagem": "🍺 Sextou! Preencha o relatório semanal.",
+    "mensagem": "Sextou! Preencha o relatório semanal.",
     "url": "https://notion.so/link-relatorio",
-    "emoji": "🚀"
+    "emoji": "🍺"
 }
 
 def criar_bloco_aviso(texto, url, emoji="🔔"):
