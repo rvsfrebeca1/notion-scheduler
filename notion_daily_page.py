@@ -2,81 +2,99 @@ import os
 from notion_client import Client
 import datetime
 
-# Configurações iniciais
+# --- CONFIGURAÇÕES ---
 notion_token = os.getenv("NOTION_TOKEN")
 database_id = os.getenv("DATABASE_ID")
 
-# Verificação de segurança simples
 if not notion_token or not database_id:
-    raise ValueError("Por favor, configure as variáveis de ambiente NOTION_TOKEN e DATABASE_ID.")
+    raise ValueError("Configure as variáveis NOTION_TOKEN e DATABASE_ID.")
 
 notion = Client(auth=notion_token)
 
-# --- CONFIGURAÇÃO DE LEMBRETES ---
-# Dicionário onde a CHAVE é o dia do mês e o VALOR é o lembrete e o link.
-# Você pode adicionar quantos dias quiser aqui.
-LEMBRETES = {
-    17: {
-        "mensagem": "Hoje é dia 30! Não esqueça de preencher o checklist de juntar grana 💰",
-        "url": "https://www.notion.so/H-BITO-Juntar-dinheiro-mensalmente-2cc6877ef64580df94cfe074814f71b3" 
+# 1. Regras Mensais (Dia do mês -> Aviso)
+LEMBRETES_MENSAIS = {
+    30: {
+        "mensagem": "📅 Dia 30: Checklist financeiro mensal!",
+        "url": "https://www.notion.so/H-BITO-Juntar-dinheiro-mensalmente-2cc6877ef64580df94cfe074814f71b3",
+        "emoji": "💰"
     },
-    17: {
-        "mensagem": "Dia 5: Hora de revisar as metas mensais! 🎯",
-        "url": "https://www.notion.so/1f86877ef64581cbb510df4b617a898e?v=1f86877ef64581db8965000c4e063372"
+    5: {
+        "mensagem": "📅 Dia 05: Revisão de metas.",
+        "url": "https://notion.so/link-metas",
+        "emoji": "🎯"
     }
 }
 
-def criar_pagina_diaria():
-    hoje = datetime.date.today()
-    dia_atual = hoje.day # Ex: 30
-    
-    data_formatada_iso = hoje.strftime("%Y-%m-%d")
-    data_formatada_br = hoje.strftime("%d/%m/%Y")
+# 2. Regras Semanais (Sexta-feira -> Aviso)
+# Sexta-feira no Python é representada pelo número 4 (Segunda=0, Dom=6)
+AVISO_SEXTA_FEIRA = {
+    "mensagem": "🍺 Sextou! Preencha e revise as metas antes de curtir o final de semana.",
+    "url": "https://www.notion.so/H-BITOS-Rotina-saud-vel-2cc6877ef6458050a7d4f1f955a08671",
+    "emoji": "🚀"
+}
 
-    print(f"📅 Iniciando criação para: {data_formatada_br}")
-
-    # 1. Definir as propriedades básicas (Metadados da página)
-    propriedades = {
-        "Data": {"date": {"start": data_formatada_iso}},
-        "Nome": {"title": [{"text": {"content": data_formatada_br}}]}
+def criar_bloco_aviso(texto, url, emoji="🔔"):
+    return {
+        "object": "block",
+        "type": "callout",
+        "callout": {
+            "icon": {"emoji": emoji},
+            "color": "gray_background",
+            "rich_text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": texto,
+                        "link": {"url": url}
+                    }
+                }
+            ]
+        }
     }
 
-    # 2. Definir o conteúdo da página (Blocos internos)
+def criar_pagina_diaria():
+    hoje = datetime.date.today()
+    dia_mes = 30  # hoje.day
+    dia_semana = 4 # hoje.weekday() # Retorna 0 (seg) a 6 (dom). Sexta é 4.
+    
+    data_iso = hoje.strftime("%Y-%m-%d")
+    data_br = hoje.strftime("%d/%m/%Y")
+
+    print(f"🔄 Processando para: {data_br} (Dia da semana: {dia_semana})")
+
+    # Lista que vai acumular todos os blocos (conteúdo da página)
     blocos_conteudo = []
 
-    # Verifica se existe um lembrete para o dia de hoje
-    if dia_atual in LEMBRETES:
-        info_lembrete = LEMBRETES[dia_atual]
-        
-        # Cria um bloco de destaque (Callout) com link
-        bloco_lembrete = {
-            "object": "block",
-            "type": "callout",
-            "callout": {
-                "icon": {"emoji": "🔔"},
-                "color": "gray_background",
-                "rich_text": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": info_lembrete["mensagem"],
-                            "link": {"url": info_lembrete["url"]} # Aqui vai o link clicável
-                        }
-                    }
-                ]
-            }
-        }
-        blocos_conteudo.append(bloco_lembrete)
-        print(f"💡 Lembrete encontrado e adicionado para o dia {dia_atual}.")
+    # --- VERIFICAÇÃO 1: É dia específico do mês? ---
+    if dia_mes in LEMBRETES_MENSAIS:
+        rule = LEMBRETES_MENSAIS[dia_mes]
+        bloco = criar_bloco_aviso(rule["mensagem"], rule["url"], rule["emoji"])
+        blocos_conteudo.append(bloco)
+        print(f"   ✅ Adicionado lembrete mensal do dia {dia_mes}")
 
-    # 3. Enviar para o Notion
+    # --- VERIFICAÇÃO 2: É Sexta-feira? (4) ---
+    if dia_semana == 4:
+        bloco = criar_bloco_aviso(
+            AVISO_SEXTA_FEIRA["mensagem"], 
+            AVISO_SEXTA_FEIRA["url"], 
+            AVISO_SEXTA_FEIRA["emoji"]
+        )
+        blocos_conteudo.append(bloco)
+        print(f"   ✅ Adicionado lembrete semanal de Sexta-feira")
+
+    # Monta as propriedades da página
+    propriedades = {
+        "Data": {"date": {"start": data_iso}},
+        "Nome": {"title": [{"text": {"content": data_br}}]}
+    }
+
     try:
         nova_pagina = notion.pages.create(
             parent={"database_id": database_id},
             properties=propriedades,
-            children=blocos_conteudo # Adiciona os blocos aqui
+            children=blocos_conteudo # Envia a lista (pode ter 0, 1 ou 2 itens)
         )
-        print(f"🚀 Página '{data_formatada_br}' criada com sucesso! ID: {nova_pagina['id']}")
+        print(f"🚀 Página '{data_br}' criada com sucesso! ID: {nova_pagina['id']}")
         
     except Exception as e:
         print(f"❌ Erro ao criar a página: {e}")
