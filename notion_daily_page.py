@@ -20,9 +20,9 @@ LEMBRETES = {
         "mensagem": "Hoje é dia 30! Não esqueça de preencher o checklist de juntar grana 💰",
         "url": "https://www.notion.so/H-BITO-Juntar-dinheiro-mensalmente-2cc6877ef64580df94cfe074814f71b3" 
     },
-    5: {
+    17: {
         "mensagem": "Dia 5: Hora de revisar as metas mensais! 🎯",
-        "url": "https://www.notion.so/seunome/Minhas-Metas-Exemplo-987654321"
+        "url": "https://www.notion.so/1f86877ef64581cbb510df4b617a898e?v=1f86877ef64581db8965000c4e063372"
     }
 }
 
