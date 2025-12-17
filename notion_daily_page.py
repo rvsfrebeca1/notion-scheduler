@@ -26,8 +26,8 @@ LEMBRETES_MENSAIS = {
 
 # 2. Regra Semanal
 AVISO_SEXTA_FEIRA = {
-    "mensagem": "Sextou! Preencha o relatório semanal.",
-    "url": "https://notion.so/link-relatorio",
+    "mensagem": "Sextou! Preencha o relatório semanal e lembre-se de curtir o final de semana com responsabilidade",
+    "url": "https://www.notion.so/H-BITOS-Rotina-saud-vel-2cc6877ef6458050a7d4f1f955a08671",
     "emoji": "🍺"
 }
 
@@ -44,8 +44,8 @@ def criar_bloco_aviso(texto, url, emoji="🔔"):
 
 def criar_pagina_diaria():
     hoje = datetime.date.today()
-    dia_mes = 30 # hoje.day
-    dia_semana = 4 # hoje.weekday() 
+    dia_mes = hoje.day
+    dia_semana = hoje.weekday() 
     
     data_iso = hoje.strftime("%Y-%m-%d")
     data_br = hoje.strftime("%d/%m/%Y")
