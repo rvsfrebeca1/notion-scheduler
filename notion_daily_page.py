@@ -44,8 +44,8 @@ def criar_bloco_aviso(texto, url, emoji="🔔"):
 
 def criar_pagina_diaria():
     hoje = datetime.date.today()
-    dia_mes = hoje.day
-    dia_semana = hoje.weekday() 
+    dia_mes = 30 # hoje.day
+    dia_semana = 4 # hoje.weekday() 
     
     data_iso = hoje.strftime("%Y-%m-%d")
     data_br = hoje.strftime("%d/%m/%Y")
