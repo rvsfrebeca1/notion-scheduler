@@ -14,23 +14,18 @@ notion = Client(auth=notion_token)
 # 1. Regras Mensais (Dia do mês -> Aviso)
 LEMBRETES_MENSAIS = {
     30: {
-        "mensagem": "📅 Dia 30: Checklist financeiro mensal!",
+        "mensagem": "Dia 30: Checklist financeiro mensal!",
         "url": "https://www.notion.so/H-BITO-Juntar-dinheiro-mensalmente-2cc6877ef64580df94cfe074814f71b3",
         "emoji": "💰"
-    },
-    5: {
-        "mensagem": "📅 Dia 05: Revisão de metas.",
-        "url": "https://notion.so/link-metas",
-        "emoji": "🎯"
     }
 }
 
 # 2. Regras Semanais (Sexta-feira -> Aviso)
 # Sexta-feira no Python é representada pelo número 4 (Segunda=0, Dom=6)
 AVISO_SEXTA_FEIRA = {
-    "mensagem": "🍺 Sextou! Preencha e revise as metas antes de curtir o final de semana.",
+    "mensagem": "Sextou! Preencha e revise as metas antes de curtir o final de semana.",
     "url": "https://www.notion.so/H-BITOS-Rotina-saud-vel-2cc6877ef6458050a7d4f1f955a08671",
-    "emoji": "🚀"
+    "emoji": "🍺"
 }
 
 def criar_bloco_aviso(texto, url, emoji="🔔"):
