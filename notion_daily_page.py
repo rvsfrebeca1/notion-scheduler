@@ -14,9 +14,14 @@ notion = Client(auth=notion_token)
 # 1. Regras Mensais (Dia do mês -> Aviso)
 LEMBRETES_MENSAIS = {
     30: {
-        "mensagem": "Dia 30: Checklist financeiro mensal!",
+        "mensagem": "Hoje é dia de checklist financeiro mensal!",
         "url": "https://www.notion.so/H-BITO-Juntar-dinheiro-mensalmente-2cc6877ef64580df94cfe074814f71b3",
         "emoji": "💰"
+    },
+    30: {
+        "mensagem": "Eai, vamos revisar as metas de 2026 e ver o que ainda faz sentido ou não? Seja sincera consigo mesma!",
+        "url": "https://www.notion.so/Planos-pessoais-por-prioridade-7ee8cb657df94cbea68deb61767d904c?source=copy_link#2cc6877ef645806bb8e5c69636afd25b",
+        "emoji": "⚠️"
     }
 }
 
