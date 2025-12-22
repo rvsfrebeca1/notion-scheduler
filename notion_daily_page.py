@@ -43,27 +43,33 @@ def criar_bloco_aviso(texto, url, emoji="🔔"):
 def buscar_pendencias_ultima_pagina():
     """Busca itens de checklist não marcados na última página criada."""
     try:
-        # 1. Busca a última página baseada na propriedade 'Data'
-        query = notion.databases.query(
-            database_id=database_id,
-            sorts=[{"property": "Data", "direction": "descending"}],
-            page_size=1
+        # 1. Busca a última página. 
+        # Note que usamos 'databases' (plural) e 'query'
+        response = notion.databases.query(
+            **{
+                "database_id": database_id,
+                "sorts": [{"property": "Data", "direction": "descending"}],
+                "page_size": 1
+            }
         )
         
-        if not query["results"]:
+        results = response.get("results", [])
+        if not results:
+            print("📭 Nenhuma página encontrada no banco de dados.")
             return []
 
-        ultima_pagina_id = query["results"][0]["id"]
+        ultima_pagina_id = results[0]["id"]
+        print(f"📄 Analisando página anterior: {ultima_pagina_id}")
         
         # 2. Busca os blocos (conteúdo) dessa página
         blocos = notion.blocks.children.list(block_id=ultima_pagina_id)
         
         pendencias = []
         for bloco in blocos.get("results", []):
-            # Verifica se o bloco é um checkbox e se NÃO está marcado
             if bloco["type"] == "to_do":
+                # Verificamos se o checkbox está FALSO
                 if not bloco["to_do"]["checked"]:
-                    # Criamos um novo bloco limpo (sem IDs antigos) para a nova página
+                    # Criamos um novo dicionário de bloco para evitar IDs antigos
                     pendencias.append({
                         "object": "block",
                         "type": "to_do",
@@ -76,7 +82,7 @@ def buscar_pendencias_ultima_pagina():
         return pendencias
 
     except Exception as e:
-        print(f"⚠️ Aviso ao buscar pendências: {e}")
+        print(f"⚠️ Erro detalhado na busca: {type(e).__name__} - {e}")
         return []
 
 def criar_pagina_diaria():
