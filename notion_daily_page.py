@@ -40,51 +40,6 @@ def criar_bloco_aviso(texto, url, emoji="🔔"):
         }
     }
 
-def buscar_pendencias_ultima_pagina():
-    """Busca itens de checklist não marcados na última página criada."""
-    try:
-        # 1. Busca a última página. 
-        # Note que usamos 'databases' (plural) e 'query'
-        response = notion.databases.query(
-            **{
-                "database_id": database_id,
-                "sorts": [{"property": "Data", "direction": "descending"}],
-                "page_size": 1
-            }
-        )
-        
-        results = response.get("results", [])
-        if not results:
-            print("📭 Nenhuma página encontrada no banco de dados.")
-            return []
-
-        ultima_pagina_id = results[0]["id"]
-        print(f"📄 Analisando página anterior: {ultima_pagina_id}")
-        
-        # 2. Busca os blocos (conteúdo) dessa página
-        blocos = notion.blocks.children.list(block_id=ultima_pagina_id)
-        
-        pendencias = []
-        for bloco in blocos.get("results", []):
-            if bloco["type"] == "to_do":
-                # Verificamos se o checkbox está FALSO
-                if not bloco["to_do"]["checked"]:
-                    # Criamos um novo dicionário de bloco para evitar IDs antigos
-                    pendencias.append({
-                        "object": "block",
-                        "type": "to_do",
-                        "to_do": {
-                            "rich_text": bloco["to_do"]["rich_text"],
-                            "checked": False,
-                            "color": bloco["to_do"]["color"]
-                        }
-                    })
-        return pendencias
-
-    except Exception as e:
-        print(f"⚠️ Erro detalhado na busca: {type(e).__name__} - {e}")
-        return []
-
 def criar_pagina_diaria():
     hoje = datetime.date.today()
     dia_mes = hoje.day
@@ -94,20 +49,6 @@ def criar_pagina_diaria():
     data_br = hoje.strftime("%d/%m/%Y")
 
     blocos_conteudo = []
-
-    # --- NOVO: BUSCAR PENDÊNCIAS DA PÁGINA ANTERIOR ---
-    print("🔍 Buscando tarefas pendentes de ontem...")
-    pendencias = buscar_pendencias_ultima_pagina()
-    if pendencias:
-        # Opcional: Adicionar um divisor ou título para separar as pendências
-        blocos_conteudo.append({
-            "object": "block",
-            "type": "heading_3",
-            "heading_3": {"rich_text": [{"type": "text", "text": {"content": "📌 Pendências de Ontem"}}]}
-        })
-        blocos_conteudo.extend(pendencias)
-        print(f"   ✅ {len(pendencias)} tarefas migradas.")
-
     # --- VERIFICAÇÃO 1: MENSAL ---
     if dia_mes in LEMBRETES_MENSAIS:
         lista_de_hoje = LEMBRETES_MENSAIS[dia_mes]
