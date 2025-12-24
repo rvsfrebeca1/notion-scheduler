@@ -55,7 +55,7 @@ def criar_pagina_diaria():
     hoje = datetime.date.today()
     dia_mes = hoje.day
     mes_atual = hoje.month
-    dia_semana = oje.weekday()
+    dia_semana = hoje.weekday()
     
     data_iso = hoje.strftime("%Y-%m-%d")
     data_br = hoje.strftime("%d/%m/%Y")
