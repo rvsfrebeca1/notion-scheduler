@@ -24,7 +24,7 @@ LEMBRETES_MENSAIS = {
 LEMBRETES_ANUAIS = {
     (3, 30): [{"mensagem": "Fim do primeiro trimestre do ano! Vamos dar uma olhada nas metas desse trimestre", "url": "https://www.notion.so/1-Trimestre-2d16877ef645812891f7fd9805a0756d", "emoji": "✅"}],
     (6, 30): [{"mensagem": "Fim do segundo trimestre do ano! Vamos dar uma olhada nas metas desse trimestre", "url": "https://www.notion.so/2-Trimestre-2d16877ef64581d4aa52c21bcd63df3c", "emoji": "✅"}],
-    (9, 30): [{"mensagem": "Fim do terceiro trimestre do ano! Vamos dar uma olhada nas metas desse trimestre", "url": "https://www.notion.so/3-Trimestre-2d16877ef6458117a494c05d4c34e993", "emoji": "✅"}]
+    (9, 30): [{"mensagem": "Fim do terceiro trimestre do ano! Vamos dar uma olhada nas metas desse trimestre", "url": "https://www.notion.so/3-Trimestre-2d16877ef6458117a494c05d4c34e993", "emoji": "✅"}],
     (12, 30): [{"mensagem": "Fim do quarto trimestre do ano! Vamos dar uma olhada nas metas desse trimestre", "url": "https://www.notion.so/4-Trimestre-2d16877ef64581a190e0cc032d0e0b18", "emoji": "✅"}]
 }
 
